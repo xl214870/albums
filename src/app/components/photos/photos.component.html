@@ -1,0 +1,43 @@
+<div>
+    <button routerLink="/" class="float-left btn btn-light">Go Back</button>
+    <h3>Welcome to {{albumTitle|titlecase}}</h3>
+    <div class="row">
+      <div class="col-3 text-center">
+        <img src="assets/tmrnd_great_moments.png" style="width: 80%; margin-bottom: 10px">
+        <span class="share">Let's share your <strong>#GreateMoments</strong> with all of us!</span>
+      </div>
+  
+      <div class="row col-9">
+          <div class="col-md-3 pb-2" *ngFor="let photo of spost | paginate: {
+            itemsPerPage: pageSize,
+            currentPage: page,
+            totalItems: totalLength}">
+            <div class="box photo px-3 pt-1">
+              <div class="avatar">
+                <img src={{photo.thumbnailUrl}} alt="">
+                <span>Romli Mohamad</span>
+              </div>
+              <div class="ribbon ribbon-top-right">
+                <span *ngIf="((photo.id)%10)==1; else second">{{ photo.id }}st</span>
+                <ng-template #second>
+                  <span *ngIf="((photo.id)%10)==2; else third">{{ photo.id }}nd</span>
+                </ng-template>
+                <ng-template #third>
+                  <span *ngIf="((photo.id)%10)==3; else fourth">{{ photo.id }}rd</span>
+                </ng-template>
+                <ng-template #fourth>
+                  <span>{{ photo.id }}th</span>
+                </ng-template>
+              </div>
+              <img src={{photo.url}} class="img-fluid" />
+              <div class="text-wrapper">
+  
+                <h6>{{photo.title}}</h6>
+              </div>
+            </div>
+          </div>
+      </div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+  
